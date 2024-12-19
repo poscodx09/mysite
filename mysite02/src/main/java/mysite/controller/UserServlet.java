@@ -7,6 +7,7 @@ import mysite.controller.action.user.JoinFormAction;
 import mysite.controller.action.user.JoinSuccessAction;
 import mysite.controller.action.user.LoginAction;
 import mysite.controller.action.user.LoginFormAction;
+import mysite.controller.action.user.LogoutAction;
 
 import java.util.Map;
 
@@ -19,7 +20,8 @@ public class UserServlet extends ActionServlet {
 			"join", new JoinAction(),
 			"joinsuccess", new JoinSuccessAction(),
 			"loginform", new LoginFormAction(),
-			"login", new LoginAction()
+			"login", new LoginAction(),
+			"logout", new LogoutAction()
 		);
 	
 	@Override
