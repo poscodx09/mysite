@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import mysite.vo.GuestbookVo;
 import mysite.vo.UserVo;
 
 public class UserDao {
@@ -57,6 +60,57 @@ public class UserDao {
 		return userVo;		
 	}
 	
+	public UserVo findByUserNo(Long authId) {
+		UserVo userVo = new UserVo();
+		
+		try (
+			Connection conn = getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("select id, name, email, password, gender from user where id = ?");
+		) {
+			pstmt.setLong(1, authId);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Long id = rs.getLong(1);
+				String name = rs.getString(2);
+				String email = rs.getString(3);
+				String password = rs.getString(4);
+				String gender = rs.getString(5);
+				
+				userVo.setId(id);
+				userVo.setName(name);
+				userVo.setEmail(email);
+				userVo.setPassword(password);
+				userVo.setGender(gender);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		return userVo;
+	}
+	
+	public int updateByUserNo(Long authUserId, UserVo vo) {
+		int count = 0;
+		System.out.println("kdkdjwe" + vo);
+		
+		try (
+			Connection conn = getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("update user set name = ?, password = ?, gender = ? where id = ?");
+		) {
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2,  vo.getPassword());
+			pstmt.setString(3,  vo.getGender());
+			pstmt.setLong(4, authUserId);
+			
+			count = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		return count;		
+		
+	}
+
 	private Connection getConnection() throws SQLException{
 		Connection conn = null;
 		
@@ -71,5 +125,6 @@ public class UserDao {
 		
 		return conn;
 	}
+
 
 }
