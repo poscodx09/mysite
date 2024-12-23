@@ -11,6 +11,8 @@ import java.util.List;
 import mysite.vo.BoardVo;
 
 public class BoardDao {
+	
+	// 전체 게시글 조회
 	public List<BoardVo> findAll() {
 		List<BoardVo> result = new ArrayList<>();
 		
@@ -51,6 +53,7 @@ public class BoardDao {
 		return result;
 	}
 	
+	// 페이지 내 게시글 조회
 	public List<BoardVo> findPageList(int page) {
 		List<BoardVo> result = new ArrayList<>();
 		
@@ -93,6 +96,7 @@ public class BoardDao {
 		return result;
 	}
 	
+	// 게시글 상세 조회
 	public BoardVo findOne(int pId) {
 		BoardVo vo = new BoardVo();
 		System.out.println("pId" + pId);
@@ -133,6 +137,7 @@ public class BoardDao {
 	}
 
 
+	// 
 	public int insert(BoardVo vo) {
 		int newId = 0;
 		

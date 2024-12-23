@@ -27,13 +27,15 @@ public class WriteAction implements Action {
 	    }
 
 	    int writerId = (int) authUser.getId(); // 현재 로그인한 유저 ID 가져오기
+//	    String pIdParam = request.getParameter("pId");
+//	    int pId = (pIdParam != null && !pIdParam.isEmpty()) ? Integer.parseInt(pIdParam) : 1; // 기본값 1
 		
-		String gIdParam = request.getParameter("gId");
-		String oIdParam = request.getParameter("oId");
-		String depthParam = request.getParameter("depth");
-		int gId = (gIdParam != null && !gIdParam.isEmpty()) ? Integer.parseInt(gIdParam) : 1; // 기본값 1
-		int oId = (oIdParam != null && !oIdParam.isEmpty()) ? Integer.parseInt(oIdParam) : 1; // 기본값 1
-		int depth = (depthParam != null && !depthParam.isEmpty()) ? Integer.parseInt(depthParam) : 0; // 기본값 0
+//		String gNoParam = request.getParameter("gNo");
+//		String oNoParam = request.getParameter("oNo");
+//		String depthParam = request.getParameter("depth");
+//		int gId = (gNoParam != null && !gNoParam.isEmpty()) ? Integer.parseInt(gNoParam) : 1; // 기본값 1
+//		int oId = (oNoParam != null && !oNoParam.isEmpty()) ? Integer.parseInt(oNoParam) : 1; // 기본값 1
+//		int depth = (depthParam != null && !depthParam.isEmpty()) ? Integer.parseInt(depthParam) : 0; // 기본값 0
 		
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
@@ -42,16 +44,16 @@ public class WriteAction implements Action {
 		
 		vo.setTitle(title);
 		vo.setContent(content);
-		vo.setHit(0);
-		vo.setGroupNo(gId);
-		vo.setOrderNo(oId);
-		vo.setDepth(depth);
-		vo.setUserId(writerId);
+//		vo.setHit(0);
+//		vo.setGroupNo(gId);
+//		vo.setOrderNo(oId);
+//		vo.setDepth(depth);
+//		vo.setUserId(writerId);
 		
 		
 		int pId = new BoardDao().insert(vo);
 		
-		response.sendRedirect(request.getContextPath() + "/board?a=" + pId);
+		response.sendRedirect(request.getContextPath() + "/board?a=list&pId" + pId);
 	}
 
 }

@@ -32,7 +32,7 @@
 					<tr>
 						<td>3</td>
 						<td style="text-align:left; padding-left:${vo.depth * 20}px">
-						<a href="${pageContext.request.contextPath}/board?a=view&pId=${vo.id}&gId=${vo.groupNo}&oId=${vo.orderNo}&depth=${vo.depth}">${vo.title }</a></td>
+						<a href="${pageContext.request.contextPath}/board?a=view&page=${page }&pId=${vo.id }">${vo.title }</a></td>
 						<td>${vo.writerName }</td>
 						<td>${vo.id}</td>
 						<td>${vo.regDate }</td>

@@ -13,6 +13,9 @@
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
+		<c:set var="gNo" value="${boardView.groupNo }"/>
+		<c:set var="oNo" value="${boardView.orderNo }"/>
+		<c:set var="depth" value="${boardView.depth }"/>
 		<div id="content">
 			<div id="board" class="board-form">
 				<table class="tbl-ex">
@@ -33,9 +36,9 @@
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="">글목록</a>
-					<a href="">글수정</a>
-					<a href="">답글</a>
+					<a href="${pageContext.request.contextPath}/board?a=list&page=${page}">글목록</a>
+					<a href="${pageContext.request.contextPath}/board?a=update">글수정</a>
+					<a href="${pageContext.request.contextPath}/board?a=writeform&page=${page }&pId=${pId}&gNo=${gId}&oNo=${oId}&depth=${depth}">답글</a>
 				</div>
 			</div>
 		</div>
