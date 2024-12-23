@@ -34,6 +34,7 @@ public class UpdateAction implements Action {
 		vo.setGender(gender);
 		
 		new UserDao().updateByUserNo(authUserId, vo);
+		authUser.setName(name);
 
 		response.sendRedirect(request.getContextPath() + "/user?a=updateform&result=success");
 	}
