@@ -1,10 +1,12 @@
 package mysite.controller;
 
 import jakarta.servlet.annotation.WebServlet;
-import mysite.controller.action.guestbook.AddAction;
-import mysite.controller.action.guestbook.DeleteAction;
-import mysite.controller.action.guestbook.DeleteFormAction;
-import mysite.controller.action.guestbook.ListAction;
+import mysite.controller.action.board.DeleteAction;
+import mysite.controller.action.board.ListAction;
+import mysite.controller.action.board.UpdateAction;
+import mysite.controller.action.board.ViewAction;
+import mysite.controller.action.board.WriteAction;
+import mysite.controller.action.board.WriteFormAction;
 
 import java.util.Map;
 
@@ -14,9 +16,12 @@ public class BoardServlet extends ActionServlet {
 	private static final long serialVersionUID = 1L;
 
 	private Map<String, Action> mapAction = Map.of(
-			"add", new AddAction(),
-			"deleteform", new DeleteFormAction(),
-			"delete", new DeleteAction()
+			"writeform", new WriteFormAction(),
+			"write", new WriteAction(),
+			"list", new ListAction(),
+			"delete", new DeleteAction(),
+			"view", new ViewAction(),
+			"update", new UpdateAction()
 			);
 	
 	@Override
