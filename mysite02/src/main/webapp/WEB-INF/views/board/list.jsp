@@ -42,19 +42,22 @@
 				</table>
 				
 				<!-- pager 추가 -->
-				<c:set var="totalPages" value="${fn:length(boardList) }" />
-				<c:set var="currentPage" value="${request.getAttribute('page')}" />
-				<c:set var="beginPage" value="${request.getAttribute('page')}" />
-				<c:set var="endPage" value="${request.getAttribute('page')}" />
+				<c:set var="currentPage" value="${page }" />
+				<c:set var="beginPage" value="${beginPage }" />
+				<c:set var="endPage" value="${endPage }" />
 				<div class="pager">
 					<ul>
-						<li><a href="${pageContext.request.contextPath}/board?a=list&page=">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+					<li>
+					<a href="${pageContext.request.contextPath}/board?a=list&page=${currentPage - 1}" ${currentPage == 1 ? 'style="pointer-events:none;opacity:0.5;"' : ''}>◀</a>
+					</li>
+					 <c:forEach var="i" begin="${beginPage}" end="${endPage}">
+            			<li class="${currentPage == i ? 'selected' : ''}">
+                			<a href="${pageContext.request.contextPath}/board?a=list&page=${i}">${i}</a>
+            			</li>
+        			</c:forEach>
+        			<li>
+        			<a href="${pageContext.request.contextPath}/board?a=list&page=${currentPage + 1}" ${currentPage == totalPages ? 'style="pointer-events:none;opacity:0.5;"' : ''}>▶</a>
+        			</li>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->

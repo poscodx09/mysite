@@ -11,12 +11,52 @@ import java.util.List;
 import mysite.vo.BoardVo;
 
 public class BoardDao {
-	public List<BoardVo> findAll(int page) {
+	public List<BoardVo> findAll() {
 		List<BoardVo> result = new ArrayList<>();
 		
 		try (
-			Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("select * from board order by g_no desc, o_no asc limit ? offset ?");	
+			Connection conn = getConnection();				
+			PreparedStatement pstmt = conn.prepareStatement("select * from board order by g_no desc, o_no asc");
+		) {
+			ResultSet rs = pstmt.executeQuery();
+
+			while(rs.next()) {
+				Long id = rs.getLong(1);
+				String title = rs.getString(2);
+				String contents = rs.getString(3);
+				int hit = rs.getInt(4);
+				String regDate = rs.getString(5);
+				int groupNo = rs.getInt(6);
+				int orderNo = rs.getInt(7);
+				int depth = rs.getInt(8);
+				int userId = rs.getInt(9);
+				
+				BoardVo vo = new BoardVo();
+				vo.setId(id);
+				vo.setTitle(title);
+				vo.setContent(contents);
+				vo.setHit(hit);
+				vo.setRegDate(regDate);
+				vo.setGroupNo(groupNo);
+				vo.setOrderNo(orderNo);
+				vo.setDepth(depth);
+				vo.setUserId(userId);
+				
+				result.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		return result;
+	}
+	
+	public List<BoardVo> findPageList(int page) {
+		List<BoardVo> result = new ArrayList<>();
+		
+		try (
+			Connection conn = getConnection();				
+			PreparedStatement pstmt = conn.prepareStatement("select * from board order by g_no desc, o_no asc limit ? offset ?");
 		) {
 			pstmt.setInt(1, page*10);
 			pstmt.setInt(2, (page-1)*10);
