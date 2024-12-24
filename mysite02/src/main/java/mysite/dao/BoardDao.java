@@ -60,8 +60,9 @@ public class BoardDao {
 		try (
 			Connection conn = getConnection();				
 			PreparedStatement pstmt = conn.prepareStatement("select * from board order by g_no desc, o_no asc limit ? offset ?");
+			PreparedStatement pstmt2 = conn.prepareStatement("select name from user where id = ?");
 		) {
-			pstmt.setInt(1, page*10);
+			pstmt.setInt(1, 10);
 			pstmt.setInt(2, (page-1)*10);
 			ResultSet rs = pstmt.executeQuery();
 
@@ -76,6 +77,9 @@ public class BoardDao {
 				int depth = rs.getInt(8);
 				int userId = rs.getInt(9);
 				
+				pstmt2.setInt(1, userId);
+				ResultSet rs2 = pstmt2.executeQuery();
+				
 				BoardVo vo = new BoardVo();
 				vo.setId(id);
 				vo.setTitle(title);
@@ -86,6 +90,11 @@ public class BoardDao {
 				vo.setOrderNo(orderNo);
 				vo.setDepth(depth);
 				vo.setUserId(userId);
+				if (rs2.next()) {
+					String writerName = rs2.getString(1);
+					vo.setWriterName(writerName);
+				}
+				
 				
 				result.add(vo);
 			}
@@ -138,32 +147,55 @@ public class BoardDao {
 
 
 	// 
-	public int insert(BoardVo vo) {
-		int newId = 0;
+	public int insert(int parentId, BoardVo vo) {
+		int newPostId = 0;
+		int groupNo = 1;
+		int orderNo = 1;
+		int depth = 0;
 		
 		try (
 			Connection conn = getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("insert into board values(null, ?, ?, ?, now(), ?, ?, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS);
 		) {
+			// 답글 게시글인 경우
+			if (parentId > 0) {
+				PreparedStatement pstmt2 = conn.prepareStatement("select * from board where id = ?");
+				pstmt2.setInt(1, parentId);
+				ResultSet rs = pstmt2.executeQuery();
+				if (rs.next()) { 
+	                groupNo = rs.getInt(6);
+	                orderNo = rs.getInt(7) + 1;
+	                depth = rs.getInt(8) + 1;
+	            }
+			}
+			else {
+				PreparedStatement pstmt2 = conn.prepareStatement("select max(g_no) from board");
+				ResultSet rs = pstmt2.executeQuery();
+				if (rs.next()) { 
+	                groupNo = rs.getInt(1) + 1;
+	            }
+			}
+			
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContent());
 			pstmt.setInt(3, vo.getHit());
-			pstmt.setInt(4, vo.getGroupNo());
-			pstmt.setInt(5, vo.getOrderNo());
-			pstmt.setInt(6, vo.getDepth());
+			pstmt.setInt(4, groupNo);
+			pstmt.setInt(5, orderNo);
+			pstmt.setInt(6, depth);
 			pstmt.setInt(7, vo.getUserId());
 			
 			pstmt.executeUpdate();
+			
 			ResultSet rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 vo.setId(rs.getInt(1));
-                newId = rs.getInt(1);
+                newPostId = rs.getInt(1);
             }
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} 
 		
-		return newId;		
+		return newPostId;		
 	}
 
 	public int deleteById(int id) {

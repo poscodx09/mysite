@@ -8,9 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import mysite.controller.ActionServlet.Action;
 import mysite.dao.BoardDao;
-import mysite.dao.GuestbookDao;
 import mysite.vo.BoardVo;
-import mysite.vo.GuestbookVo;
 import mysite.vo.UserVo;
 
 public class WriteAction implements Action {
@@ -27,33 +25,24 @@ public class WriteAction implements Action {
 	    }
 
 	    int writerId = (int) authUser.getId(); // 현재 로그인한 유저 ID 가져오기
-//	    String pIdParam = request.getParameter("pId");
-//	    int pId = (pIdParam != null && !pIdParam.isEmpty()) ? Integer.parseInt(pIdParam) : 1; // 기본값 1
+		int pId = Integer.parseInt(request.getParameter("pId") != null ? request.getParameter("pId") : "0");
+		int page = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
 		
-//		String gNoParam = request.getParameter("gNo");
-//		String oNoParam = request.getParameter("oNo");
-//		String depthParam = request.getParameter("depth");
-//		int gId = (gNoParam != null && !gNoParam.isEmpty()) ? Integer.parseInt(gNoParam) : 1; // 기본값 1
-//		int oId = (oNoParam != null && !oNoParam.isEmpty()) ? Integer.parseInt(oNoParam) : 1; // 기본값 1
-//		int depth = (depthParam != null && !depthParam.isEmpty()) ? Integer.parseInt(depthParam) : 0; // 기본값 0
+		request.setAttribute("pId", pId);
+		request.setAttribute("page", page);
 		
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		
 		BoardVo vo = new BoardVo();
-		
 		vo.setTitle(title);
 		vo.setContent(content);
-//		vo.setHit(0);
-//		vo.setGroupNo(gId);
-//		vo.setOrderNo(oId);
-//		vo.setDepth(depth);
-//		vo.setUserId(writerId);
+		vo.setHit(0);
+		vo.setUserId(writerId);
 		
+		int newPostId = new BoardDao().insert(pId, vo);
 		
-		int pId = new BoardDao().insert(vo);
-		
-		response.sendRedirect(request.getContextPath() + "/board?a=list&pId" + pId);
+		response.sendRedirect(request.getContextPath() + "/board?a=view&page=" + page + "&pId=" + newPostId);
 	}
 
 }
