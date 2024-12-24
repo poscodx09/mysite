@@ -215,6 +215,22 @@ public class BoardDao {
 		return count;
 	}
 	
+	public int updateHitById(int id) {
+		int count = 0;
+		
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement("update board set hit = hit + 1 where id = ?;");) {
+
+			pstmt.setInt(1, id);
+			count = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("드라이버 로딩 실패: " + e);
+		}
+		
+		return count;
+	}
+	
 	private Connection getConnection() throws SQLException{
 		Connection conn = null;
 		

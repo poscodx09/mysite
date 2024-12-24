@@ -22,6 +22,8 @@ public class ViewAction implements Action {
 		request.setAttribute("pId", pId);
 		request.setAttribute("page", page);
 		
+		new BoardDao().updateHitById(pId);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/board/view.jsp");
 		rd.forward(request, response);
 	}

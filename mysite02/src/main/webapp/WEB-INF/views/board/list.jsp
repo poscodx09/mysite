@@ -38,7 +38,7 @@
 						</c:if>
 						<a href="${pageContext.request.contextPath}/board?a=view&page=${page }&pId=${vo.id }">${vo.title }</a></td>
 						<td>${vo.writerName }</td>
-						<td>${vo.id}</td>
+						<td>${vo.hit}</td>
 						<td>${vo.regDate }</td>
 						<td>
 						<c:if test='${authUser.id == vo.userId}'>
