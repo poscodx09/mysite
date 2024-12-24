@@ -32,6 +32,7 @@ public class ListAction implements Action {
 		request.setAttribute("page", page);
 		request.setAttribute("boardList", list);
 		request.setAttribute("totalPages", totalPages);
+		request.setAttribute("totalPosts", totalPosts);
 		request.setAttribute("beginPage", beginPage);
 		request.setAttribute("endPage", endPage);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/board/list.jsp");

@@ -146,7 +146,7 @@ public class BoardDao {
 	}
 
 
-	// 
+	// 글 작성
 	public int insert(int parentId, BoardVo vo) {
 		int newPostId = 0;
 		int groupNo = 1;
@@ -197,7 +197,31 @@ public class BoardDao {
 		
 		return newPostId;		
 	}
+	
+	// 글 수정
+	public int update(int parentId, BoardVo vo) {
+		int count = 0;
+		
+		try (
+			Connection conn = getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("update board set title=?, content=? where id=?");
+		) {
 
+				pstmt.setString(1, vo.getTitle());
+				pstmt.setString(2, vo.getContent());
+				pstmt.setLong(3, parentId);
+				
+				System.out.println(vo.getTitle()+vo.getContent()+parentId);
+				count = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Error:" + e);
+		}
+		
+		return count;			
+	}
+
+	// 글 삭제
 	public int deleteById(int id) {
 		int count = 0;
 		
@@ -215,6 +239,7 @@ public class BoardDao {
 		return count;
 	}
 	
+	// 조회수
 	public int updateHitById(int id) {
 		int count = 0;
 		

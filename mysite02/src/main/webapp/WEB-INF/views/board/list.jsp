@@ -31,7 +31,7 @@
 					<c:set var="count" value="${fn:length(boardList) }" />
 					<c:forEach items="${boardList }" var="vo" varStatus="status">
 					<tr>
-						<td>${count - status.index }</td>
+						<td>${totalPosts - (page - 1) * 10 - status.index}</td>
 						<td style="text-align:left; padding-left:${vo.depth * 20}px">
 						<c:if test='${vo.depth > 0}'>
 						<img src="${pageContext.request.contextPath}/assets/images/reply.png" alt="reply"/>
@@ -58,9 +58,16 @@
 					<a href="${pageContext.request.contextPath}/board?a=list&page=${currentPage - 1}" ${currentPage == 1 ? 'style="pointer-events:none;opacity:0.5;"' : ''}>◀</a>
 					</li>
 					 <c:forEach var="i" begin="${beginPage}" end="${endPage}">
-            			<li class="${currentPage == i ? 'selected' : ''}">
-                			<a href="${pageContext.request.contextPath}/board?a=list&page=${i}">${i}</a>
-            			</li>
+					 	<c:choose>
+							<c:when test="${i == currentPage}">
+								<li class="selected">${i}</li>
+							</c:when>
+							<c:otherwise>
+								<li>
+	                			<a href="${pageContext.request.contextPath}/board?a=list&page=${i}">${i}</a>
+	            				</li>
+							</c:otherwise>
+						</c:choose>
         			</c:forEach>
         			<li>
         			<a href="${pageContext.request.contextPath}/board?a=list&page=${currentPage + 1}" ${currentPage == totalPages ? 'style="pointer-events:none;opacity:0.5;"' : ''}>▶</a>
@@ -69,9 +76,11 @@
 				</div>					
 				<!-- pager 추가 -->
 
-				<div class="bottom">
-					<a href="${pageContext.request.contextPath}/board?a=writeform&page=${currentPage }" id="new-book">글쓰기</a>
-				</div>				
+				<c:if test="${not empty authUser }">
+					<div class="bottom">
+						<a href="${pageContext.request.contextPath}/board?a=writeform&page=${currentPage }" id="new-book">글쓰기</a>
+					</div>
+				</c:if>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>

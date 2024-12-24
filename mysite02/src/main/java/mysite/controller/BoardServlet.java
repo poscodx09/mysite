@@ -4,6 +4,7 @@ import jakarta.servlet.annotation.WebServlet;
 import mysite.controller.action.board.DeleteAction;
 import mysite.controller.action.board.ListAction;
 import mysite.controller.action.board.UpdateAction;
+import mysite.controller.action.board.UpdateFormAction;
 import mysite.controller.action.board.ViewAction;
 import mysite.controller.action.board.WriteAction;
 import mysite.controller.action.board.WriteFormAction;
@@ -21,7 +22,8 @@ public class BoardServlet extends ActionServlet {
 			"list", new ListAction(),
 			"delete", new DeleteAction(),
 			"view", new ViewAction(),
-			"update", new UpdateAction()
+			"update", new UpdateAction(),
+			"updateform", new UpdateFormAction()
 			);
 	
 	@Override

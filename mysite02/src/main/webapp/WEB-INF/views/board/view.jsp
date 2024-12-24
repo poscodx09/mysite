@@ -37,7 +37,7 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/board?a=list&page=${page}">글목록</a>
-					<a href="${pageContext.request.contextPath}/board?a=update">글수정</a>
+					<a href="${pageContext.request.contextPath}/board?a=updateform&page=${page }&pId=${pId}">글수정</a>
 					<a href="${pageContext.request.contextPath}/board?a=writeform&page=${page }&pId=${pId}">답글</a>
 				</div>
 			</div>
