@@ -36,13 +36,13 @@
 						<c:if test='${vo.depth > 0}'>
 						<img src="${pageContext.request.contextPath}/assets/images/reply.png" alt="reply"/>
 						</c:if>
-						<a href="${pageContext.request.contextPath}/board?a=view&page=${page }&pId=${vo.id }">${vo.title }</a></td>
+						<a href="${pageContext.request.contextPath}/board/view/${page }/${vo.id }">${vo.title }</a></td>
 						<td>${vo.writerName }</td>
 						<td>${vo.hit}</td>
 						<td>${vo.regDate }</td>
 						<td>
 						<c:if test='${authUser.id == vo.userId}'>
-						<a href="${pageContext.request.contextPath}/board?a=delete&pId=${vo.id}" class="del">삭제</a></td>
+						<a href="${pageContext.request.contextPath}/board/delete/${vo.id}" class="del">삭제</a></td>
 						</c:if>
 					</tr>
 					</c:forEach>
@@ -55,7 +55,7 @@
 				<div class="pager">
 					<ul>
 					<li>
-					<a href="${pageContext.request.contextPath}/board?a=list&page=${currentPage - 1}" ${currentPage == 1 ? 'style="pointer-events:none;opacity:0.5;"' : ''}>◀</a>
+					<a href="${pageContext.request.contextPath}/board/list/${currentPage - 1}" ${currentPage == 1 ? 'style="pointer-events:none;opacity:0.5;"' : ''}>◀</a>
 					</li>
 					 <c:forEach var="i" begin="${beginPage}" end="${endPage}">
 					 	<c:choose>
@@ -64,13 +64,13 @@
 							</c:when>
 							<c:otherwise>
 								<li>
-	                			<a href="${pageContext.request.contextPath}/board?a=list&page=${i}">${i}</a>
+	                			<a href="${pageContext.request.contextPath}/board/list/${i}">${i}</a>
 	            				</li>
 							</c:otherwise>
 						</c:choose>
         			</c:forEach>
         			<li>
-        			<a href="${pageContext.request.contextPath}/board?a=list&page=${currentPage + 1}" ${currentPage == totalPages ? 'style="pointer-events:none;opacity:0.5;"' : ''}>▶</a>
+        			<a href="${pageContext.request.contextPath}/board/list/${currentPage + 1}" ${currentPage == totalPages ? 'style="pointer-events:none;opacity:0.5;"' : ''}>▶</a>
         			</li>
 					</ul>
 				</div>					
@@ -78,7 +78,7 @@
 
 				<c:if test="${not empty authUser }">
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath}/board?a=writeform&page=${currentPage }" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath}/board/write/${currentPage }/0" id="new-book">글쓰기</a>
 					</div>
 				</c:if>
 			</div>

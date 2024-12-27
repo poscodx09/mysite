@@ -5,39 +5,46 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import mysite.repository.BoardRepository;
+import mysite.repository.GuestbookRepository;
 import mysite.vo.BoardVo;
 
 @Service
 public class BoardService {
-	public void addContents(BoardVo vo) {
-		
+	
+	private BoardRepository boardRepository;
+	
+	public BoardService(BoardRepository boardRepository) {
+		this.boardRepository = boardRepository;
+	}
+	
+	
+	public void addContents(int pId, BoardVo vo) {
+		boardRepository.insert(pId, vo);
 	}
 	
 	// view
-	public BoardVo getContents(Long id) {
-		
+	public BoardVo getContents(int id) {
+		return boardRepository.findOne(id);
 	}
 	
-	public BoardVo getContents(Long id, Long userId) {
-		
+//	public BoardVo getContents(Long id, Long userId) {
+//	}
+	
+	public void updateContents(int pId, BoardVo vo) {
+		boardRepository.update(pId, vo);
 	}
 	
-	public void updateContents(BoardVo vo) {
-		
+	public void deleteContents(int id, Long userId) {
+		boardRepository.deleteById(id);
 	}
 	
-	public void deleteContents(Long id, Long userId) {
-		
+	public List<BoardVo> getContentsPageList(int currentPage){
+		return boardRepository.findPageList(currentPage);
 	}
 	
-	public Map<String, Object> getContentsList(int currentPage, String keyword){
-		List<BoardVo> list = null;
-		
-		// view의 pagination을 위한 데이터 값 계산
-		
-		
+	public List<BoardVo> getContentsAllList(){
+		return boardRepository.findAll();
 	}
 	
-	
-
 }

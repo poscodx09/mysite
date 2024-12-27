@@ -59,6 +59,7 @@ public class BoardRepository {
 	// 페이지 내 게시글 조회
 	public List<BoardVo> findPageList(int page) {
 		List<BoardVo> result = new ArrayList<>();
+		System.out.println("repo page:" + page);
 		
 		try (
 			Connection conn = getConnection();				
@@ -147,54 +148,6 @@ public class BoardRepository {
 		
 		return vo;
 	}
-
-//	public int insertNew(BoardVo vo) {
-//		int count = 0;
-//
-//		try (Connection conn = getConnection();
-//				PreparedStatement pstmt = conn.prepareStatement("select max(g_no) from board;");
-//				PreparedStatement pstmt2 = conn
-//						.prepareStatement("insert board values(null, ?, ?, 0, now(), ?, 1, 0, ?);")) {
-//			ResultSet rs = pstmt.executeQuery();
-//			int max = 0;
-//			while (rs.next())
-//				max = rs.getInt(1);
-//
-//			pstmt2.setString(1, vo.getTitle());
-//			pstmt2.setString(2, vo.getContent());
-//			pstmt2.setInt(3, max + 1);
-//			pstmt2.setLong(4, vo.getUserId());
-//
-//			count = pstmt2.executeUpdate();
-//			rs.close();
-//		} catch (SQLException e) {
-//			System.out.println("error: " + e);
-//		}
-//
-//		return count;
-//	}
-//
-//	public int insertReply(BoardVo vo) {
-//		int count = 0;
-//
-//		try (Connection conn = getConnection();
-//				PreparedStatement pstmt = conn
-//						.prepareStatement("insert board values(null, ?, ?, 0, now(), ?, ?, ?, ?);")) {
-//			pstmt.setString(1, vo.getTitle());
-//			pstmt.setString(2, vo.getContent());
-//			pstmt.setInt(3, vo.getGroupNo());
-//			pstmt.setInt(4, vo.getOrderNo() + 1);
-//			pstmt.setInt(5, vo.getDepth() + 1);
-//			pstmt.setLong(6, vo.getUserId());
-//
-//			count = pstmt.executeUpdate();
-//		} catch (SQLException e) {
-//			System.out.println("error: " + e);
-//		}
-//
-//		return count;
-//	}
-//	
 	
 	// 글 작성
 	public int insert(int parentId, BoardVo vo) {
