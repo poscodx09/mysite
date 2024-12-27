@@ -145,7 +145,54 @@ public class BoardDao {
 		return vo;
 	}
 
-
+//	public int insertNew(BoardVo vo) {
+//		int count = 0;
+//
+//		try (Connection conn = getConnection();
+//				PreparedStatement pstmt = conn.prepareStatement("select max(g_no) from board;");
+//				PreparedStatement pstmt2 = conn
+//						.prepareStatement("insert board values(null, ?, ?, 0, now(), ?, 1, 0, ?);")) {
+//			ResultSet rs = pstmt.executeQuery();
+//			int max = 0;
+//			while (rs.next())
+//				max = rs.getInt(1);
+//
+//			pstmt2.setString(1, vo.getTitle());
+//			pstmt2.setString(2, vo.getContent());
+//			pstmt2.setInt(3, max + 1);
+//			pstmt2.setLong(4, vo.getUserId());
+//
+//			count = pstmt2.executeUpdate();
+//			rs.close();
+//		} catch (SQLException e) {
+//			System.out.println("error: " + e);
+//		}
+//
+//		return count;
+//	}
+//
+//	public int insertReply(BoardVo vo) {
+//		int count = 0;
+//
+//		try (Connection conn = getConnection();
+//				PreparedStatement pstmt = conn
+//						.prepareStatement("insert board values(null, ?, ?, 0, now(), ?, ?, ?, ?);")) {
+//			pstmt.setString(1, vo.getTitle());
+//			pstmt.setString(2, vo.getContent());
+//			pstmt.setInt(3, vo.getGroupNo());
+//			pstmt.setInt(4, vo.getOrderNo() + 1);
+//			pstmt.setInt(5, vo.getDepth() + 1);
+//			pstmt.setLong(6, vo.getUserId());
+//
+//			count = pstmt.executeUpdate();
+//		} catch (SQLException e) {
+//			System.out.println("error: " + e);
+//		}
+//
+//		return count;
+//	}
+//	
+	
 	// 글 작성
 	public int insert(int parentId, BoardVo vo) {
 		int newPostId = 0;
@@ -159,15 +206,30 @@ public class BoardDao {
 		) {
 			// 답글 게시글인 경우
 			if (parentId > 0) {
-				PreparedStatement pstmt2 = conn.prepareStatement("select * from board where id = ?");
+				
+				PreparedStatement pstmt2 = conn.prepareStatement("select * from board where id = ?;");
 				pstmt2.setInt(1, parentId);
 				ResultSet rs = pstmt2.executeQuery();
-				if (rs.next()) { 
-	                groupNo = rs.getInt(6);
-	                orderNo = rs.getInt(7) + 1;
-	                depth = rs.getInt(8) + 1;
-	            }
+				
+				if (rs.next()) {
+					groupNo = rs.getInt(6);
+	                orderNo = rs.getInt(7);
+				}
+                
+				PreparedStatement pstmt3 = conn.prepareStatement("update board set o_no = o_no + 1 where g_no = ? and o_no >= ?;");
+				pstmt3.setInt(1, groupNo);
+				pstmt3.setInt(2, orderNo + 1);
+				pstmt3.executeUpdate();
+				
+				ResultSet rs2 = pstmt2.executeQuery();
+				
+				if (rs2.next()) {
+					groupNo = rs2.getInt(6);
+	                orderNo = rs2.getInt(7) + 1;
+	                depth = rs2.getInt(8) + 1;
+				}
 			}
+			
 			else {
 				PreparedStatement pstmt2 = conn.prepareStatement("select max(g_no) from board");
 				ResultSet rs = pstmt2.executeQuery();
@@ -196,6 +258,22 @@ public class BoardDao {
 		} 
 		
 		return newPostId;		
+	}
+	
+	
+	public void updateBygNoAndoNo(int gNo, int oNo) {
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn
+						.prepareStatement("update board set o_no = o_no + 1 where g_no = ? and o_no >= ?;");) {
+			pstmt.setInt(1, gNo);
+			pstmt.setInt(2, oNo + 1);
+			System.out.println("gNo: " + gNo + ", oNo: " + oNo);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("드라이버 로딩 실패: " + e);
+		}
 	}
 	
 	// 글 수정
