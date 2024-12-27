@@ -40,7 +40,9 @@
 					<c:if test='${authUser.id == boardView.userId}'>
 						<a href="${pageContext.request.contextPath}/board?a=updateform&page=${page }&pId=${pId}">글수정</a>
 					</c:if>
-					<a href="${pageContext.request.contextPath}/board?a=writeform&page=${page }&pId=${pId}">답글</a>
+					<c:if test='${not empty authUser }'>
+						<a href="${pageContext.request.contextPath}/board?a=writeform&page=${page }&pId=${pId}">답글</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
