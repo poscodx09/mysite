@@ -1,12 +1,7 @@
-<%@page import="mysite.vo.UserVo"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	UserVo authUserVo = (UserVo) request.getAttribute("userVo");
-	System.out.println("123" + authUserVo);
-%>
 <!DOCTYPE html>
 <html>
 <head>
