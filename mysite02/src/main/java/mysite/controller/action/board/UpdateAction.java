@@ -41,7 +41,7 @@ public class UpdateAction implements Action {
 		new BoardDao().update(pId, vo);
 		System.out.println("ddd"+vo);
 		
-		response.sendRedirect(request.getContextPath() + "/board?a=updateform&page=" + page + "&pId=" + pId);
+		response.sendRedirect(request.getContextPath() + "/board?a=view&page=" + page + "&pId=" + pId);
 	}
 
 }
