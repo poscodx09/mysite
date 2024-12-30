@@ -37,8 +37,12 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/board/list/${page}">글목록</a>
-					<a href="${pageContext.request.contextPath}/board/update/${page }/${pId}">글수정</a>
+					<c:if test="${authUser.getId() == boardView.userId}" >
+						<a href="${pageContext.request.contextPath}/board/update/${page }/${pId}">글수정</a>
+					</c:if>
+					<c:if test='${not empty authUser }'>
 					<a href="${pageContext.request.contextPath}/board/write/${page }/${pId}">답글</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
