@@ -7,12 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import mysite.security.Auth;
+import mysite.security.AuthUser;
 import mysite.service.BoardService;
 import mysite.vo.BoardVo;
-import mysite.vo.GuestbookVo;
 import mysite.vo.UserVo;
 
 @Controller
@@ -76,12 +76,11 @@ private BoardService boardService;
 		int page = (currentPage != null) ? currentPage: 1;
 		
 		vo.setUserId(writerId);
-		System.out.println("write vo" + vo);
 		boardService.addContents(pId, vo);
 		
 		model.addAttribute("page", page);
 		model.addAttribute("pId", pId);
-		return "board/list";
+		return "redirect:/board/list/" + page;
 	}
 	
 	@RequestMapping(value="/view/{page}/{pId}", method=RequestMethod.GET)
@@ -90,6 +89,14 @@ private BoardService boardService;
 		BoardVo vo = boardService.getContents(pId);
 		model.addAttribute("boardView", vo);
 		return "board/view";
+	}
+	
+	@Auth
+	@RequestMapping(value="/delete/{pId}", method=RequestMethod.GET)
+	public String view(@AuthUser UserVo authUser, @PathVariable("pId") int pId, Model model) {
+		
+		boardService.deleteContents(pId, authUser.getId());
+		return "redirect:/board/list";
 	}
 
 
