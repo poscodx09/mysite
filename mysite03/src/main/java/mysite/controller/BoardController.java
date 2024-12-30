@@ -93,10 +93,35 @@ private BoardService boardService;
 	
 	@Auth
 	@RequestMapping(value="/delete/{pId}", method=RequestMethod.GET)
-	public String view(@AuthUser UserVo authUser, @PathVariable("pId") int pId, Model model) {
+	public String delete(@AuthUser UserVo authUser, @PathVariable("pId") int pId, Model model) {
 		
 		boardService.deleteContents(pId, authUser.getId());
 		return "redirect:/board/list";
+	}
+	
+	@Auth
+	@RequestMapping(value="/update/{page}/{pId}", method=RequestMethod.GET)
+	public String update(
+			@AuthUser UserVo authUser,
+			@PathVariable(value="page", required=false) Integer page, 
+			@PathVariable(value="pId", required=false) Integer pId,
+			Model model) {
+		
+		BoardVo boardVo = boardService.getContents(pId);
+		model.addAttribute("boardView", boardVo);
+		return "board/modify";
+	}
+	
+	@Auth
+	@RequestMapping(value="/update/{page}/{pId}", method=RequestMethod.POST)
+	public String update(
+			@AuthUser UserVo authUser,
+			@PathVariable(value="page", required=false) Integer page, 
+			@PathVariable(value="pId", required=false) Integer pId,
+			BoardVo boardVo) {
+		
+		boardService.updateContents(pId, boardVo);
+		return "redirect:/board/update/" + page + "/" + pId;
 	}
 
 

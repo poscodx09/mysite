@@ -18,7 +18,6 @@ public class BoardService {
 		this.boardRepository = boardRepository;
 	}
 	
-	
 	public void addContents(int pId, BoardVo vo) {
 		boardRepository.insert(pId, vo);
 	}
@@ -27,9 +26,6 @@ public class BoardService {
 	public BoardVo getContents(int id) {
 		return boardRepository.findOne(id);
 	}
-	
-//	public BoardVo getContents(Long id, Long userId) {
-//	}
 	
 	public void updateContents(int pId, BoardVo vo) {
 		boardRepository.update(pId, vo);

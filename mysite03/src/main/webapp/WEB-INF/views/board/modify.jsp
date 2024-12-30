@@ -15,7 +15,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board?a=update&page=${page}&pId=${pId}">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/update/${page}/${pId}">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글 수정</th>
@@ -32,7 +32,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath}/board?a=view&page=${page}&pId=${pId}">취소</a>
+						<a href="${pageContext.request.contextPath}/board/view/${page}/${pId}">취소</a>
 						<input type="submit" value="수정">
 					</div>
 				</form>				
