@@ -49,9 +49,8 @@ public class AuthInterceptor implements HandlerInterceptor {
 			return false;
 		}
 		
-		System.out.println("role:" + role);
 		if ("ADMIN".equals(role) & "USER".equals(authUser.getRole())) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN);
+			response.sendRedirect(request.getContextPath());
 	        return false;
 		}
 		
