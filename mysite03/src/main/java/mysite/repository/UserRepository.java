@@ -12,8 +12,6 @@ import mysite.vo.UserVo;
 
 @Repository
 public class UserRepository {
-	@Autowired
-	private DataSource dataSource;
 
 	private SqlSession sqlSession;
 	
@@ -23,7 +21,14 @@ public class UserRepository {
 	}
 	
 	public int insert(UserVo vo) {
-		return sqlSession.insert("user.insert", vo);	
+		try {
+			return sqlSession.insert("user.insert", vo);	
+		} catch(RuntimeException e) {
+			System.out.println("error:" + e);
+		}
+		
+		return 0;
+		
 	}
 	
 	public UserVo findByEmailAndPassword(String email, String password) {
