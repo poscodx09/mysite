@@ -18,6 +18,7 @@ public class GuestbookRepository {
 	}
 	
 	public List<GuestbookVo> findAll() {
+		System.out.println(sqlSession.selectList("guestbook.findAll").getFirst());
 		return sqlSession.selectList("guestbook.findAll");
 	}
 
