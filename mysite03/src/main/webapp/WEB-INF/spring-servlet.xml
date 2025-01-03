@@ -17,6 +17,10 @@
 			<bean class="mysite.security.AuthUserHandlerMethodArgumentResolver"/>
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
+	
+	<!-- mvc url-resource mapping -->
+	<mvc:resources mapping="/assets/upload-images/**" location="file:/mysite-uploads/" />
+	
 
 	<!-- DefaultServlet Handler -->
 	<mvc:default-servlet-handler />
