@@ -19,10 +19,10 @@
 				<div id="site-introduction">
 					<img id="profile"
 						src="${pageContext.request.contextPath }${siteVo.profile}"
-						width="100">
+						width="400">
 					<h2>${siteVo.welcome }</h2>
 					<p>
-						${siteVo.description }
+						${siteVo.description }<br/>
 						<a href="${pageContext.request.contextPath }/guestbook/list">방명록</a>에 글 남기기<br>
 					</p>
 				</div>

@@ -7,4 +7,10 @@
 		select id, title, welcome, profile, description from site limit 1;
 		]]>
 	</select>
+	
+	<update id="update" parameterType="sitevo">
+		<![CDATA[
+			update site set title=#{title}, welcome=#{welcome}, profile=#{profile}, description=#{description} where id = 1
+		]]>
+	</update>
 </mapper>

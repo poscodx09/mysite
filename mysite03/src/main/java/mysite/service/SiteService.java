@@ -19,8 +19,7 @@ public class SiteService {
 	}
 	
 	public void updateSite(SiteVo siteVo) {
-		
+		System.out.println("####" + siteVo);
+		siteRepository.update(siteVo);
 	}
-	
-	
 }
