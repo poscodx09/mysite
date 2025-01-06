@@ -3,6 +3,7 @@
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%pageContext.setAttribute("newline", "\n");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
 						width="400">
 					<h2>${siteVo.welcome }</h2>
 					<p>
-						${siteVo.description }<br/>
+						${fn:replace(siteVo.description, newline, "<br>") }<br/><br/>
 						<a href="${pageContext.request.contextPath }/guestbook/list">방명록</a>에 글 남기기<br>
 					</p>
 				</div>

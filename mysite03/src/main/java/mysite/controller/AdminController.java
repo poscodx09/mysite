@@ -50,9 +50,10 @@ public class AdminController {
 		siteVo.setTitle(title);
 		siteVo.setWelcome(welcome);
 		siteVo.setDescription(description);
-		
-		String url = fileUploadService.restore(profile);
-		siteVo.setProfile(url);
+		if(profile != null) {
+			String url = fileUploadService.restore(profile);
+			siteVo.setProfile(url);
+		}
 		siteService.updateSite(siteVo);
 		return "redirect:/admin/main";
 	}

@@ -27,13 +27,9 @@
 						<input type="file" name="profile">
 
 						<label class="block-label">사이트 설명</label>
-						<textarea name="description">${siteVo.description }</textarea>
-						
+						<textarea name="description">${fn:replace(siteVo.description, newline, "<br>") }</textarea>
 						<input type="submit" value="변경" />
 					</form>
-									
-				
-
 				</div>
 			</div>
 			<c:import url="/WEB-INF/views/admin/include/navigation.jsp">
