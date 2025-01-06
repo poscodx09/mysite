@@ -63,6 +63,11 @@
 			<mvc:exclude-mapping path="/assets/**"/>
 			<bean class="mysite.security.HeaderInterceptor"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/assets/**"/>
+			<bean class="mysite.interceptor.SiteInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
 	
 	<!-- View Resolver -->
@@ -75,6 +80,9 @@
 		<property name="order" value="1" />
 	</bean>
 
+	<!-- ApplicationContextEventListener -->
+	<bean class="mysite.event.ApplicationContextEventListener" />
+	
 	<context:annotation-config />
 	<context:component-scan
 		base-package="mysite.controller, mysite.exception" />
