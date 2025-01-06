@@ -33,7 +33,9 @@
 	
 	<context:annotation-config />
 
-	<context:component-scan base-package="mysite.service, mysite.repository">
+	<aop:aspectj-autoproxy />
+	
+	<context:component-scan base-package="mysite.service, mysite.repository, mysite.aspect">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Repository" />
 		<context:include-filter type="annotation"
