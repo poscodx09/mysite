@@ -1,13 +1,39 @@
 package mysite.vo;
 
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 public class UserVo {
 	private Long id;
+	
+	@NotEmpty
+	@Size(min=2, max=8)
 	private String name;
+	
+	@NotEmpty
+	@Email
 	private String email;
+	
+	@NotEmpty
+	@Size(min=4, max=8)
 	private String password;
+	
 	private String gender;
 	private String joinDate;
 	private String role;
+	
+	@AssertTrue(message = "이용 약관에 동의해야 합니다.")
+	private boolean agree;
+	
+	public boolean getAgree() {
+		return agree;
+	}
+	public void setAgree(boolean agree) {
+		this.agree = agree;
+	}
 	
 	public long getId() {
 		return id;
@@ -15,6 +41,7 @@ public class UserVo {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public String getName() {
 		return name;
 	}
