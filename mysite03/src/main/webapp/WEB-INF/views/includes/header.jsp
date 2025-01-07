@@ -17,7 +17,7 @@ window.addEventListener("load", function(){
 });
 </script>
 <div id="header">
-	<h1>${siteTitle }</h1>
+	<h1>${siteVo.title }</h1>
 	<div id="languages">
 		<c:choose>
 			<c:when test="${lang == 'en' }">
