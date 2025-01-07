@@ -46,15 +46,18 @@ public class AdminController {
 			@RequestParam("title") String title,
 			@RequestParam("welcome") String welcome,
 			@RequestParam("description") String description,
-			@RequestParam("profile") MultipartFile profile) {
+			@RequestParam("profile") String profileUrl,
+			@RequestParam("file") MultipartFile multipartFile) {
 		
 		SiteVo siteVo = new SiteVo();
 		siteVo.setTitle(title);
 		siteVo.setWelcome(welcome);
 		siteVo.setDescription(description);
+		siteVo.setProfile(profileUrl);
+		
+		String profile = fileUploadService.restore(multipartFile);
 		if(profile != null) {
-			String url = fileUploadService.restore(profile);
-			siteVo.setProfile(url);
+			siteVo.setProfile(profile);
 		}
 		siteService.updateSite(siteVo);
 		
@@ -65,7 +68,7 @@ public class AdminController {
 		SiteVo site = applicationContext.getBean(SiteVo.class);
 		BeanUtils.copyProperties(siteVo, site);
 		
-		return "redirect:/admin/main";
+		return "redirect:/admin";
 	}
 	
 	@RequestMapping("/guestbook")

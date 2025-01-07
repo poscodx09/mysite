@@ -28,7 +28,7 @@ public class SiteInterceptor implements HandlerInterceptor {
 			request.getServletContext().setAttribute("siteVo", siteVo);
 		}
 		
-		request.setAttribute("siteVo", siteService.getSite());
+//		request.setAttribute("siteVo", siteService.getSite());
 		
 		// locale
 		String lang = localeResolver.resolveLocale(request).getLanguage();
