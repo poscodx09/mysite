@@ -28,5 +28,9 @@ public class GuestbookRepository {
 	public int deleteByIdAndPassword(Long id, String password) {
 		return sqlSession.delete("guestbook.deleteByIdAndPassword", Map.of("id", id, "password", password));	
 	}
+
+	public GuestbookVo findById(Long id) {
+		return sqlSession.selectOne("guestbook.findById", id);
+	}
 	
 }

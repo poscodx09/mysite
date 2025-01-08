@@ -11,8 +11,8 @@ import mysite.vo.GuestbookVo;
 
 @Service
 public class GuestbookService {
-	private GuestbookRepository guestbookRepository;
-	private GuestbookLogRepository guestbookLogRepository;
+	private final GuestbookRepository guestbookRepository;
+	private final GuestbookLogRepository guestbookLogRepository;
 	
 	public GuestbookService(GuestbookRepository guestbookRepository, GuestbookLogRepository guestbookLogRepository) {
 		this.guestbookRepository = guestbookRepository;
@@ -24,12 +24,26 @@ public class GuestbookService {
 	}
 	
 	@Transactional
-	public int deleteContents(Long id, String password) {
-		return guestbookRepository.deleteByIdAndPassword(id, password);
+	public void deleteContents(Long id, String password) {
+		GuestbookVo vo = guestbookRepository.findById(id);
+		System.out.println("id" + id);
+		System.out.println("vo" + vo);
+		if (vo == null) {
+			return;
+		}
+	
+		int count = guestbookRepository.deleteByIdAndPassword(id, password);
+		if (count == 1) {
+			guestbookLogRepository.updateByRegDate(vo.getRegDate());
+		}
 	}
 	
 	@Transactional
 	public void addContents(GuestbookVo vo) {
+		int count = guestbookLogRepository.update();
+		if (count == 0) {
+			guestbookLogRepository.insert();
+		}
 		guestbookRepository.insert(vo);
 	}
 

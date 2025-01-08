@@ -12,14 +12,9 @@
 		update guestbook_log set count = count + 1 where date = current_date()
 		]]>
 	</update>
-	<update id="update" parameterType="guestbookvo">
-		<![CDATA[
-		update guestbook_log set count = count + 1 where date = current_date()
-		]]>
-	</update>
 	<update id="updateByRegDate" parameterType="string">
 		<![CDATA[
-		update guestbook_log set count = count - 1 where date_format(date, '%Y-%m-d') = #{regDate}, regDate)
+		update guestbook_log set count = count - 1 where date_format(date, '%Y-%m-d') = #{regDate}
 		]]>
 	</update>
 </mapper>
