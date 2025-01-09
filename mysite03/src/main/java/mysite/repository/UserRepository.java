@@ -40,9 +40,15 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findById", authId);
 	}
 	
+	public UserVo findByEmail(String email) {
+		return sqlSession.selectOne("user.findByEmail", email);
+	}
+	
 	public int updateByUserNo(Long authUserId, UserVo vo) {
 		return sqlSession.update("user.update", vo);
 		
 	}
+
+
 
 }

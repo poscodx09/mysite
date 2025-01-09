@@ -38,8 +38,8 @@
 					<spring:message code="user.join.label.email.check"
 						var="userSignupEmailCheck" />
 					<input type="button" value="${userSignupEmailCheck }" method="get"
-						action="${pageContext.request.contextPath }/user?a=duplication">
-
+						action="${pageContext.request.contextPath }/user?a=duplication" style="display:;">
+					<img src="${pageContext.request.contextPath }/assets/images/check.png" style="vertical-align:bottom; width:24px;" />
 					<label class="block-label"><spring:message
 							code="user.join.label.password" /></label>
 					<form:password path="password" />
@@ -51,12 +51,12 @@
 						<legend>
 							<spring:message code="user.join.label.gender" />
 						</legend>
+						<form:radiobutton path="gender" value="female" checked="checked"/>
 						<label><spring:message
 								code="user.join.label.gender.female" /></label>
-						<form:radiobutton path="gender" value="female" checked="checked"/>
-							<label><spring:message
-								code="user.join.label.gender.male" /></label>
 						<form:radiobutton path="gender" value="male"/>
+						<label><spring:message
+								code="user.join.label.gender.male" /></label>
 					</fieldset>
 
 					<fieldset>

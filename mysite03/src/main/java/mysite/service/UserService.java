@@ -17,16 +17,24 @@ public class UserService {
 		userRepository.insert(userVo);
 	}
 
+	// 로그인
 	public UserVo getUser(String email, String password) {
 		return userRepository.findByEmailAndPassword(email, password);
 	}
 
+	// 업데이트
 	public UserVo getUser(long id) {
 		return userRepository.findByUserNo(id);
+	}
+	
+	public UserVo getUser(String email) {
+		return userRepository.findByEmail(email);
 	}
 
 	public void update(long id, UserVo userVo) {
 		userRepository.updateByUserNo(id, userVo);
 	}
+
+
 
 }
