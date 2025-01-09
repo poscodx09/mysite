@@ -8,10 +8,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>mysite</title>
+<title>mysite03</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath }/assets/css/user.css"
 	rel="stylesheet" type="text/css">
+<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
+<script>
+$(function(){
+	console.log("dom loaded");
+	var el = $("#btn-check");
+	el.click(function() {
+		var email = $("#email").val();
+		if (email == ""){
+			return;
+		}
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath }/api/user/checkemail?email=" + email,
+			typea: "get",
+			dataType: "json",
+			success: function(response) {
+				if (response.exist){
+					alert("해당 이메일이 이미 존재합니다. 다른 이메일을 사용하세요.");
+					$("#email").val("");
+					$("#email").focus();
+					return;
+				}
+				
+				$("#img-check").show();
+				$("#btn-check").hide();
+			},
+			error: function(xhr, status, err){
+				console.error(err);
+			}
+		});
+	});
+});
+</script>
 </head>
 <body>
 	<div id="container">
@@ -31,15 +64,15 @@
 					<label class="block-label" for="email"><spring:message
 							code="user.join.label.email" /></label>
 					<form:input path="email" />
-					<p style="color: red;">
-						<form:errors path="name" />
-					</p>
-
 					<spring:message code="user.join.label.email.check"
 						var="userSignupEmailCheck" />
-					<input type="button" value="${userSignupEmailCheck }" method="get"
+					<input id="btn-check" type="button" value="${userSignupEmailCheck }" method="get"
 						action="${pageContext.request.contextPath }/user?a=duplication" style="display:;">
-					<img src="${pageContext.request.contextPath }/assets/images/check.png" style="vertical-align:bottom; width:24px;" />
+					<img id="img-check" src="${pageContext.request.contextPath }/assets/images/check.png" style="vertical-align:bottom; width:24px; display:none;" />
+					<p style="color: red;">
+						<form:errors path="email" />
+					</p>
+					
 					<label class="block-label"><spring:message
 							code="user.join.label.password" /></label>
 					<form:password path="password" />
