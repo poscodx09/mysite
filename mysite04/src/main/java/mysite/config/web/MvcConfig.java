@@ -23,7 +23,6 @@ import org.springframework.web.servlet.view.JstlView;
 
 import mysite.event.ApplicationContextEventListener;
 import mysite.interceptor.SiteInterceptor;
-import mysite.service.SiteService;
 
 @Configuration
 @EnableWebMvc
@@ -91,6 +90,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	}
 	
 	// Interceptors
+	@Bean
 	public HandlerInterceptor siteInterceptor() {
 		return new SiteInterceptor();
 	}
