@@ -21,7 +21,7 @@
 					<input name="password" type="password" value="">
 					<c:if test='${"fail" == result}'>
 						<p>
-							로그인이 실패 했습니다.
+							로그인에 실패했습니다.
 						</p>
 					</c:if>
 					<input type="submit" value="로그인">
