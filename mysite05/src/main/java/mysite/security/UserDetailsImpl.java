@@ -1,8 +1,10 @@
 package mysite.security;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import mysite.vo.UserVo;
@@ -12,7 +14,8 @@ public class UserDetailsImpl extends UserVo implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		System.out.println("rolerole" + getRole());
+		return List.of(new SimpleGrantedAuthority("ROLE_" + getRole()));
 	}
 
 	@Override
@@ -20,8 +23,9 @@ public class UserDetailsImpl extends UserVo implements UserDetails {
 		return getName();
 	}
 	
-	public String getUserPassword() {
-		return getPassword();
+	@Override
+	public String getPassword() {
+		return super.getPassword();
 	}
 
 }

@@ -1,6 +1,7 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -41,9 +42,10 @@
 						<td>${vo.hit}</td>
 						<td>${vo.regDate }</td>
 						<td>
-						<c:if test='${authUser.id == vo.userId}'>
-						<a href="${pageContext.request.contextPath}/board/delete/${vo.id}" class="del">삭제</a></td>
-						</c:if>
+						<sec:authorize access="isAuthenticated()">
+		    				<sec:authentication property="principal" var="authUser"/>
+		    				<a href="${pageContext.request.contextPath}/board/delete/${vo.id}" class="del">삭제</a></td>
+		    			</sec:authorize>
 					</tr>
 					</c:forEach>
 				</table>

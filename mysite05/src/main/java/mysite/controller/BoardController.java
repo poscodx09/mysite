@@ -2,6 +2,7 @@ package mysite.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import jakarta.servlet.http.HttpSession;
-import mysite.security.Auth;
-import mysite.security.AuthUser;
 import mysite.service.BoardService;
 import mysite.vo.BoardVo;
 import mysite.vo.UserVo;
@@ -91,35 +90,30 @@ private BoardService boardService;
 		return "board/view";
 	}
 	
-	@Auth
 	@RequestMapping(value="/delete/{pId}", method=RequestMethod.GET)
-	public String delete(@AuthUser UserVo authUser, @PathVariable("pId") int pId, Model model) {
-		
+	public String delete(Authentication authentication, @PathVariable("pId") int pId, Model model) {
+		UserVo authUser = (UserVo) authentication.getPrincipal();
 		boardService.deleteContents(pId, authUser.getId());
 		return "redirect:/board/list";
 	}
 	
-	@Auth
 	@RequestMapping(value="/update/{page}/{pId}", method=RequestMethod.GET)
 	public String update(
-			@AuthUser UserVo authUser,
+			Authentication authentication,
 			@PathVariable(value="page", required=false) Integer page, 
 			@PathVariable(value="pId", required=false) Integer pId,
 			Model model) {
-		
 		BoardVo boardVo = boardService.getContents(pId);
 		model.addAttribute("boardView", boardVo);
 		return "board/modify";
 	}
 	
-	@Auth
 	@RequestMapping(value="/update/{page}/{pId}", method=RequestMethod.POST)
 	public String update(
-			@AuthUser UserVo authUser,
+			Authentication authentication,
 			@PathVariable(value="page", required=false) Integer page, 
 			@PathVariable(value="pId", required=false) Integer pId,
 			BoardVo boardVo) {
-		
 		boardService.updateContents(pId, boardVo);
 		return "redirect:/board/update/" + page + "/" + pId;
 	}
