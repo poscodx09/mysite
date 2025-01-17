@@ -2,8 +2,10 @@ package mysite.initializer;
 
 import java.util.ResourceBundle;
 
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import jakarta.servlet.Filter;
 import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.ServletRegistration.Dynamic;
 import mysite.config.AppConfig;
@@ -25,6 +27,11 @@ public class MySiteWebApplicationInitializer extends AbstractAnnotationConfigDis
 	protected String[] getServletMappings() {
 		return new String[] {"/"};
 	}
+	
+	@Override
+	protected Filter[] getServletFilters() {
+		return new Filter[] { new DelegatingFilterProxy("springSecurityFilterChain") };
+	}
 
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
@@ -36,5 +43,7 @@ public class MySiteWebApplicationInitializer extends AbstractAnnotationConfigDis
 		MultipartConfigElement config = new MultipartConfigElement(null, maxFileSize, maxRequestSize, fileSizeThresHold);
 		registration.setMultipartConfig(config);
 	}
+
+
 	
 }
