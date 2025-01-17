@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import jakarta.servlet.http.HttpSession;
 import mysite.service.BoardService;
 import mysite.vo.BoardVo;
 import mysite.vo.UserVo;
@@ -60,12 +59,11 @@ private BoardService boardService;
 	
 	@RequestMapping(value="/write/{currentPage}/{pId}", method=RequestMethod.POST)
 	public String write(
-			HttpSession session,
+			Authentication authentication,
 			@PathVariable(value="currentPage", required=false) Integer currentPage, 
 			@PathVariable(value="pId", required=false) Integer parentId,
 			BoardVo vo, Model model) {
-		
-	    UserVo authUser = (UserVo) session.getAttribute("authUser");
+		UserVo authUser = (UserVo) authentication.getPrincipal();
 	    if (authUser == null) {
 	        return "redirect:/";
 	    }
