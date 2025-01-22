@@ -60,3 +60,7 @@ server:
     port: 8080
     servlet:
         context-path: /mysite06
+        
+# logging
+logging:
+    config: classpath:logback.xml        
