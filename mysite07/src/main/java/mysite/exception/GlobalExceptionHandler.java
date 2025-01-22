@@ -4,8 +4,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -15,11 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import mysite.dto.JsonResult;
 
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	private static final Log log = LogFactory.getLog(GlobalExceptionHandler.class);
 	
 	@ExceptionHandler(Exception.class)
 	public void handler(

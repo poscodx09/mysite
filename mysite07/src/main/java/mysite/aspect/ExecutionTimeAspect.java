@@ -6,6 +6,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 @Aspect
 public class ExecutionTimeAspect {
@@ -22,7 +25,7 @@ public class ExecutionTimeAspect {
         String methodName = pjp.getSignature().getName();
         String taskName = className + "." + methodName;
 
-        System.out.println("[Execution Time][" + taskName + "] " + executionTime + " ms");
+        log.info("[Execution Time][" + taskName + "] " + executionTime + " ms");
 
         return result;
     }
