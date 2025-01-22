@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -50,10 +51,9 @@ public class GlobalExceptionHandler {
 		}
 		
 		//4. HTML 응답: 사과 페이지(종료)
-		if (e instanceof NoHandlerFoundException) {
-			request.setAttribute("errors", errors.toString());
+		if (e instanceof NoHandlerFoundException || e instanceof NoResourceFoundException) {
 			request
-				.getRequestDispatcher("/WEB-INF/views/errors/404.jsp")
+				.getRequestDispatcher("/error/404.jsp")
 				.forward(request, response);
 		}
 		else {
