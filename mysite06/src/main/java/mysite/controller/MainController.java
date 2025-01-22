@@ -24,7 +24,7 @@ public class MainController {
 	@ResponseBody
 	@RequestMapping("/msg02")
 	public String message02() {
-		return "와라 2025";
+		return "안녕 세상";
 	}
 	
 	@ResponseBody

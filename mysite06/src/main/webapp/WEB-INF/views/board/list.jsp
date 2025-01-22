@@ -41,10 +41,11 @@
 						<td>${vo.writerName }</td>
 						<td>${vo.hit}</td>
 						<td>${vo.regDate }</td>
-						<td>
 						<sec:authorize access="isAuthenticated()">
 		    				<sec:authentication property="principal" var="authUser"/>
-		    				<a href="${pageContext.request.contextPath}/board/delete/${vo.id}" class="del">삭제</a></td>
+		    				<c:if test="${not empty authUser && authUser.id == vo.userId}">
+                                <td><a href="${pageContext.request.contextPath}/board/delete/${vo.id}" class="del">삭제</a></td>
+                            </c:if>
 		    			</sec:authorize>
 					</tr>
 					</c:forEach>
@@ -78,11 +79,14 @@
 				</div>					
 				<!-- pager 추가 -->
 
-				<c:if test="${not empty authUser }">
-					<div class="bottom">
-						<a href="${pageContext.request.contextPath}/board/write/${currentPage }/0" id="new-book">글쓰기</a>
-					</div>
-				</c:if>
+                <sec:authorize access="isAuthenticated()">
+                    <sec:authentication property="principal" var="authUser"/>
+						<c:if test="${not empty authUser }">
+							<div class="bottom">
+								<a href="${pageContext.request.contextPath}/board/write/${currentPage }/0" id="new-book">글쓰기</a>
+							</div>
+						</c:if>
+				</sec:authorize>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>

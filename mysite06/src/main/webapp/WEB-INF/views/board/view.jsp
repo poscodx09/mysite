@@ -1,6 +1,7 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -37,12 +38,15 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/board/list/${page}">글목록</a>
-					<c:if test="${authUser.getId() == boardView.userId}" >
-						<a href="${pageContext.request.contextPath}/board/update/${page }/${pId}">글수정</a>
-					</c:if>
-					<c:if test='${not empty authUser }'>
-					<a href="${pageContext.request.contextPath}/board/write/${page }/${pId}">답글</a>
-					</c:if>
+					<sec:authorize access="isAuthenticated()">
+                        <sec:authentication property="principal" var="authUser"/>
+							<c:if test="${not empty authUser && authUser.getId() == boardView.userId}" >
+								<a href="${pageContext.request.contextPath}/board/update/${page }/${pId}">글수정</a>
+							</c:if>
+							<c:if test='${not empty authUser }'>
+							<a href="${pageContext.request.contextPath}/board/write/${page }/${pId}">답글</a>
+							</c:if>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>

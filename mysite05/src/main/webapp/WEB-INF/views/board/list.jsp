@@ -43,9 +43,11 @@
 						<td>${vo.regDate }</td>
 						<td>
 						<sec:authorize access="isAuthenticated()">
-		    				<sec:authentication property="principal" var="authUser"/>
-		    				<a href="${pageContext.request.contextPath}/board/delete/${vo.id}" class="del">삭제</a></td>
-		    			</sec:authorize>
+                            <sec:authentication property="principal" var="authUser"/>
+                            <c:if test="${authUser.id == vo.userId}">
+                                <td><a href="${pageContext.request.contextPath}/board/delete/${vo.id}" class="del">삭제</a></td>
+                            </c:if>
+                        </sec:authorize>
 					</tr>
 					</c:forEach>
 				</table>
