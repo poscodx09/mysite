@@ -9,9 +9,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Exception Handler: Spring Controller</h1>
-<pre style="color:#f00">
-${errors }
-</pre>
+	<h1>Unknown Error: Custom</h1>
+	<pre style="color:#f00">
+	   ?
+    </pre>
 </body>
 </html>
